@@ -16,10 +16,7 @@ package org.zkoss.reach.android.server.impl;
 
 import java.util.Map;
 
-import org.zkoss.zk.ui.UiException;
 import org.zkoss.zk.ui.sys.JsContentRenderer;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * @author timothyclare
@@ -32,7 +29,7 @@ public class ReachContentRenderer extends JsContentRenderer {
 	 */
 	@Override
 	public void renderWidgetOverrides(Map overrides) {
-		throw new UiException("Base methods on android cannot be overwritten");
+		throw new UnsupportedOperationException("Base methods on android cannot be overwritten");
 	}
 
 	/* (non-Javadoc)
@@ -40,7 +37,7 @@ public class ReachContentRenderer extends JsContentRenderer {
 	 */
 	@Override
 	public void renderWidgetListeners(Map listeners) {
-		throw new UiException("Widget listeners cannot be passed to android");
+		throw new UnsupportedOperationException("Widget listeners cannot be passed to android");
 	}
 
 	/* (non-Javadoc)
@@ -48,6 +45,6 @@ public class ReachContentRenderer extends JsContentRenderer {
 	 */
 	@Override
 	public void renderDirectly(String name, Object value) {
-		throw new UiException("Rendering directly to android is not available");
+		throw new UnsupportedOperationException("Rendering directly to android is not available");
 	}
 }

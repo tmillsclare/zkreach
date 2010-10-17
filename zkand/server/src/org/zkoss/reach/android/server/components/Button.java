@@ -35,18 +35,20 @@ public class Button extends ReachComponent {
 	private String _text;
 
 	/**
-	 * @return the _text
+	 * @return the text
 	 */
 	public String getText() {
 		return _text;
 	}
 
 	/**
-	 * @param text the _text to set
+	 * @param text the text to set
 	 */
 	public void setText(String text) {
-		_text = text;
-		smartUpdate("text", text);
+		if(!text.equals(text)) {
+			_text = text;
+			smartUpdate("text", text);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -57,7 +59,6 @@ public class Button extends ReachComponent {
 			throws IOException {
 		
 		super.renderProperties(renderer);
-		
 		render(renderer, "text", getText());
 	}
 }

@@ -24,20 +24,25 @@ import org.zkoss.zk.ui.sys.ContentRenderer;
  *
  */
 public class Label extends ReachComponent {
-	private String _prologContent;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2662205957506607075L;
+	
+	private String _value;
 
 	/**
-	 * @return the _prologContent
+	 * @return the value
 	 */
-	public String getPrologContent() {
-		return _prologContent;
+	public String getValue() {
+		return _value;
 	}
 
 	/**
-	 * @param prologContent the _prologContent to set
+	 * @param value the value to set
 	 */
-	public void setPrologContent(String prologContent) {
-		_prologContent = prologContent;
+	public void setValue(String value) {
+		_value = value;
 	}
 	
 	/* (non-Javadoc)
@@ -48,7 +53,6 @@ public class Label extends ReachComponent {
 			throws IOException {
 		
 		super.renderProperties(renderer);
-		
-		render(renderer, "prologContent", getPrologContent());
+		render(renderer, "value", getValue());
 	}
 }

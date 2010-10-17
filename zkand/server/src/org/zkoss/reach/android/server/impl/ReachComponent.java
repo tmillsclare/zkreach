@@ -57,7 +57,7 @@ public class ReachComponent extends AbstractComponent {
 		
 		try {
 			if (order < 0)
-				out.write("{");
+				out.write("[");
 			else if (order > 0) //not first child
 				out.write(',');
 
@@ -101,9 +101,9 @@ public class ReachComponent extends AbstractComponent {
 					out.write('\'');
 				}
 				
-				out.write('}');
+				out.write(']');
 			} else {
-				out.write('}');
+				out.write("];\n");
 				out.write(extra);
 			}
 		}
