@@ -24,5 +24,5 @@ package org.zkoss.reach.android.server;
 public class Version {
 	/** Returns the version UID.
 	 */
-	public static final String UID = "5.0.5";
+	public static final String UID = "1.0.0";
 }

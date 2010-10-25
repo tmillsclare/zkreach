@@ -25,7 +25,7 @@ public class ReachDevice extends GenericDevice {
 
 	@Override
 	public String getContentType() {
-		return "text/json";
+		return "application/json";
 	}
 
 }

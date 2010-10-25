@@ -19,7 +19,7 @@ Copyright (C) 2007 Potix Corporation. All Rights Reserved.
 
 	<version>
 		<version-class>org.zkoss.reach.android.server.Version</version-class>
-		<version-uid>5.0.5</version-uid>
+		<version-uid>1.0.0</version-uid>
 	</version>
 
 	<renderer-class>org.zkoss.reach.android.server.impl.PageRenderer</renderer-class>
@@ -83,11 +83,11 @@ Copyright (C) 2007 Potix Corporation. All Rights Reserved.
 	<component>
 		<component-name>button</component-name>
 		<component-class>org.zkoss.reach.android.server.components.Button</component-class>
-		<widget-class>org.zkoss.reach.android.components.Button</widget-class> 
+		<widget-class>android.Button</widget-class> 
 	</component>
 	<component>
 		<component-name>label</component-name>
 		<component-class>org.zkoss.reach.android.server.components.Label</component-class>
-		<widget-class>org.zkoss.reach.android.components.Label</widget-class>
+		<widget-class>android.Label</widget-class>
 	</component>
 </language>

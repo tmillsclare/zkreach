@@ -68,10 +68,6 @@ public class PageRenderer implements org.zkoss.zk.ui.sys.PageRenderer {
 		}
 	}
 	
-	private static void write(Writer out, String s) throws IOException {
-		if (s != null) out.write(s);
-	}
-	
 	/** Renders the page if {@link Page#isComplete} is false.
 	 */
 	protected void renderPage(Execution exec, Page page, Writer out)
@@ -86,7 +82,7 @@ public class PageRenderer implements org.zkoss.zk.ui.sys.PageRenderer {
 		
 		try {
 			if (order < 0)
-				out.write("{");
+				out.write("{\"page\":[");
 			else if (order > 0) //not first child
 				out.write(',');
 			out.write("\n[0,'"); //0: page
@@ -123,7 +119,7 @@ public class PageRenderer implements org.zkoss.zk.ui.sys.PageRenderer {
 			extra = ComponentRedraws.afterRedraw();
 		}
 		
-		out.write("}");
+		out.write("]}");
 
 	}
 	
