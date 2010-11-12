@@ -4,12 +4,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.util.Log;
+import android.view.ViewGroup;
 
 public class PageCommandHandler extends CommandHandler<ZKRoot> implements Invoker<ZKRoot>, Parser<ZKRoot> {
 	
 	@Override
-	public void invoke(ZKRoot object) {
-		System.out.println("Invoking " + PageCommandHandler.class);		
+	public void invoke(ZKRoot object, ViewGroup root) {
+		
+		for(ZKComponent zkc : object.getComponents()) {
+			
+		}
+		
+	}
+	
+	private void invokeClass(ZKComponent component) {
+		for(ZKComponent zkc : component.getComponents()) {
+			
+		}
 	}
 
 	@Override

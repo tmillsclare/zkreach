@@ -9,6 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.zkoss.reach.android.exceptions.parsing.ParserRegisterationException;
 
+import android.view.ViewGroup;
+
 public class ReachParser {
 	
 	private static Map<ParserCommand, CommandHandler<?>> _registeredHandler = new HashMap<ParserCommand, CommandHandler<?>>();
@@ -25,13 +27,14 @@ public class ReachParser {
 		return _registeredHandler.put(parserCommand, ch);
 	}
 	
-	public static void parse(String json) throws JSONException {
+	@SuppressWarnings("rawtypes")
+	public static void parse(String json, ViewGroup root) throws JSONException {
 		JSONObject object = new JSONObject(json);
 		
-		Iterator<String> iterator = object.keys();
+		Iterator iterator = object.keys();
 		
 		while(iterator.hasNext()) {
-			String command = iterator.next();
+			String command = (String)iterator.next();
 			
 			for (Map.Entry<ParserCommand, CommandHandler<?>> entry : _registeredHandler.entrySet()) {
 				
@@ -42,7 +45,7 @@ public class ReachParser {
 					JSONArray contents = object.getJSONArray(command);
 	
 					CommandHandler<?> ch = entry.getValue();
-					ch.handle(contents);
+					ch.handle(contents, root);
 				}
 			}
 		}

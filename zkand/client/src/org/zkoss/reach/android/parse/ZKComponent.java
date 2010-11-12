@@ -77,6 +77,7 @@ public class ZKComponent {
 	 * @param comp
 	 * @throws JSONException 
 	 */
+	@SuppressWarnings("rawtypes")
 	public ZKComponent(JSONArray comp) throws JSONException {
 		_clsName=comp.getString(0);
 		_id=comp.getString(1);
@@ -98,5 +99,9 @@ public class ZKComponent {
 			}
 		}
 
+	}
+	
+	public boolean hasChildren() {
+		return _components.size() > 0;
 	}
 }
