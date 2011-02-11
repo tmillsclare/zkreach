@@ -23,7 +23,6 @@ import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.UiException;
 import org.zkoss.zk.ui.sys.ComponentRedraws;
-import org.zkoss.zk.ui.sys.JsContentRenderer;
 
 /**
  * Reach base component

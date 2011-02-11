@@ -10,6 +10,9 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.zkoss.reach.android.ZKReachConstants;
+
+import android.util.Log;
 
 public final class HttpDownload {
 	public static String fromUri(URI uri) {
@@ -17,17 +20,12 @@ public final class HttpDownload {
 		HttpGet get = new HttpGet(uri);
 		HttpResponse response = null;
 		StringBuilder sb = new StringBuilder();
+		BufferedReader reader = null;
 		
 		try {
 			response = client.execute(get);
-		} catch (ClientProtocolException e) {
 			
-		} catch (IOException e) {
-			
-		}
-		
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+			reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 			
 			String line = null;
 			
@@ -35,12 +33,20 @@ public final class HttpDownload {
 				sb.append(line);
 			}
 			
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			Log.e(ZKReachConstants.ZKReachTag, "ClientProtocolException", e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(ZKReachConstants.ZKReachTag, "IOException", e);
+		} catch (IllegalStateException e) {
+			Log.e(ZKReachConstants.ZKReachTag, "IllegalStateException", e);
+		} finally {
+			if(reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					Log.e(ZKReachConstants.ZKReachTag, "IOException", e);
+				}
+			}
 		}
 		
 		return sb.toString();		

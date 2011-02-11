@@ -14,6 +14,8 @@ Copyright (C) 2010 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.reach.android.parse;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,6 +25,9 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xmlpull.v1.XmlSerializer;
+
+import android.util.Xml;
 
 /**
  * @author Tim
@@ -77,10 +82,10 @@ public class ZKComponent {
 	 * @param comp
 	 * @throws JSONException 
 	 */
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings("unchecked")
 	public ZKComponent(JSONArray comp) throws JSONException {
-		_clsName=comp.getString(0);
-		_id=comp.getString(1);
+		_clsName = comp.getString(0);
+		_id = comp.getString(1);
 		
 		JSONObject obj = comp.getJSONObject(2);
 		Iterator iterator = obj.keys();
@@ -103,5 +108,44 @@ public class ZKComponent {
 	
 	public boolean hasChildren() {
 		return _components.size() > 0;
+	}
+	
+	public String toString() {
+		//build xml output
+		XmlSerializer xml = Xml.newSerializer();
+		StringWriter strWriter = new StringWriter();
+		String strComponent = null;
+		
+		try {
+			xml.setOutput(strWriter);
+			xml.startDocument(null, Boolean.valueOf(true));
+			xml.startTag(null, _clsName);
+			
+			for(String key: getOptions().keySet()) {
+				xml.attribute(null, key, getOptions().get(key));
+			}
+			
+			xml.endTag(null, _clsName);
+			xml.endDocument();
+			
+			
+			strComponent = strWriter.toString();
+			
+			//TODO:Null check
+			strWriter.close();
+			
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return strComponent;
+		
 	}
 }

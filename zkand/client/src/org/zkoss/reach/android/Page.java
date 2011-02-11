@@ -23,6 +23,7 @@ public class Page {
 		
 		if(location == null) {
 			throw new IllegalArgumentException("The page location cannot be null");
+			
 		}
 		
 		if(context == null) {
@@ -34,7 +35,7 @@ public class Page {
 		String json = HttpDownload.fromUri(location);
 		
 		try {
-			ReachParser.parse(json, getLayout());
+			ReachParser.parse(json, getLayout(), context);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

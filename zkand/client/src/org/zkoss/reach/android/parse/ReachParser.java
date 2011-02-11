@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.zkoss.reach.android.exceptions.parsing.ParserRegisterationException;
 
+import android.content.Context;
 import android.view.ViewGroup;
 
 public class ReachParser {
@@ -27,8 +28,8 @@ public class ReachParser {
 		return _registeredHandler.put(parserCommand, ch);
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public static void parse(String json, ViewGroup root) throws JSONException {
+	@SuppressWarnings("unchecked")
+	public static void parse(String json, ViewGroup root, Context context) throws JSONException {
 		JSONObject object = new JSONObject(json);
 		
 		Iterator iterator = object.keys();
@@ -45,7 +46,7 @@ public class ReachParser {
 					JSONArray contents = object.getJSONArray(command);
 	
 					CommandHandler<?> ch = entry.getValue();
-					ch.handle(contents, root);
+					ch.handle(contents, root, context);
 				}
 			}
 		}
