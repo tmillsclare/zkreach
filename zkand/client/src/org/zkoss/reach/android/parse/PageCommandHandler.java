@@ -1,20 +1,14 @@
 package org.zkoss.reach.android.parse;
 
-import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Xml;
 import android.view.View;
 import android.view.ViewGroup;
 
