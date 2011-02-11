@@ -23,26 +23,29 @@ import org.zkoss.zk.ui.sys.ContentRenderer;
  * @author timothyclare
  *
  */
-public class Label extends ReachComponent {
+public class TextView extends ReachComponent {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2662205957506607075L;
 	
-	private String _value;
+	private String _text;
 
 	/**
-	 * @return the value
+	 * @return the text
 	 */
-	public String getValue() {
-		return _value;
+	public String getText() {
+		return _text;
 	}
 
 	/**
-	 * @param value the value to set
+	 * @param text the text to set
 	 */
-	public void setValue(String value) {
-		_value = value;
+	public void setText(String text) {
+		if(!text.equals(_text)) {
+			_text = text;
+			smartUpdate("text", text);
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -53,6 +56,6 @@ public class Label extends ReachComponent {
 			throws IOException {
 		
 		super.renderProperties(renderer);
-		render(renderer, "value", getValue());
+		render(renderer, "text", getText());
 	}
 }

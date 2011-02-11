@@ -42,7 +42,7 @@ public class ReachParser {
 				//let's get the string value of the ParserCommand
 				String parserCommand = entry.getKey().toString();
 				
-				if(parserCommand.equals(command)) {
+				if(parserCommand.equalsIgnoreCase(command)) {
 					JSONArray contents = object.getJSONArray(command);
 	
 					CommandHandler<?> ch = entry.getValue();

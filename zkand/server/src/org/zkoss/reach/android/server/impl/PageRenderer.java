@@ -82,43 +82,48 @@ public class PageRenderer implements org.zkoss.zk.ui.sys.PageRenderer {
 
 		final int order = ComponentRedraws.beforeRedraw(false);
 
-		if (order < 0)
-			out.write("{\"page\":[");
-		else if (order > 0) // not first child
-			out.write(',');
-		out.write("\n[0,'"); // 0: page
-		out.write(page.getUuid());
-		out.write("',{");
+		try {
+			if (order < 0)
+				out.write("{\"page\":");
+			else if (order > 0) // not first child
+				out.write(',');
+			out.write("\n[0,'"); // 0: page
+			out.write(page.getUuid());
+			out.write("',{");
 
-		final StringBuffer props = new StringBuffer(128);
-		final String pgid = page.getId();
-		if (pgid.length() > 0)
-			appendProp(props, "id", pgid);
-		if (owner != null) {
-			appendProp(props, "ow", owner.getUuid());
-		} else {
-			appendProp(props, "dt", desktop.getId());
-			appendProp(props, "cu", getContextURI(exec));
-			appendProp(props, "uu", desktop.getUpdateURI(null));
-			appendProp(props, "ru", desktop.getRequestPath());
+			final StringBuffer props = new StringBuffer(128);
+			final String pgid = page.getId();
+			if (pgid.length() > 0)
+				appendProp(props, "id", pgid);
+			if (owner != null) {
+				appendProp(props, "ow", owner.getUuid());
+			} else {
+				appendProp(props, "dt", desktop.getId());
+				appendProp(props, "cu", getContextURI(exec));
+				appendProp(props, "uu", desktop.getUpdateURI(null));
+				appendProp(props, "ru", desktop.getRequestPath());
+			}
+
+			if (!isClientROD(page))
+				appendProp(props, "z$rod", Boolean.FALSE);
+
+			if (contained)
+				appendProp(props, "ct", Boolean.TRUE);
+
+			out.write(props.toString());
+			out.write("},[");
+
+			for (Component root = page.getFirstRoot(); root != null; root = root
+					.getNextSibling())
+				((ComponentCtrl) root).redraw(out);
+
+			out.write("]]");
+
+			out.write("}");
+		} finally {
+
+			ComponentRedraws.afterRedraw();
 		}
-
-		if (!isClientROD(page))
-			appendProp(props, "z$rod", Boolean.FALSE);
-
-		if (contained)
-			appendProp(props, "ct", Boolean.TRUE);
-
-		out.write(props.toString());
-		out.write("},[");
-
-		for (Component root = page.getFirstRoot(); root != null; root = root
-				.getNextSibling())
-			((ComponentCtrl) root).redraw(out);
-
-		out.write("]]");
-
-		out.write("]}");
 
 	}
 

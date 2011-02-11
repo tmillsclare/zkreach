@@ -45,7 +45,7 @@ public class Button extends ReachComponent {
 	 * @param text the text to set
 	 */
 	public void setText(String text) {
-		if(!text.equals(text)) {
+		if(!text.equals(_text)) {
 			_text = text;
 			smartUpdate("text", text);
 		}
