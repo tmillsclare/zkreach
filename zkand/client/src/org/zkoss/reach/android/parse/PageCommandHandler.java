@@ -1,11 +1,15 @@
 package org.zkoss.reach.android.parse;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.zkoss.reach.android.coerce.CoerceType;
+import org.zkoss.reach.android.coerce.ReachCoercible;
 
 import android.content.Context;
 import android.util.Log;
@@ -22,7 +26,7 @@ public class PageCommandHandler extends CommandHandler<ZKRoot> implements
 		}
 	}
 
-	private void invokeClass(ZKComponent component, ViewGroup root,
+	private void invokeClass(ZKComponent component, ViewGroup parent,
 			Context context) {
 
 		// TODO: Make a decision as to what happens at this point of the
@@ -41,11 +45,34 @@ public class PageCommandHandler extends CommandHandler<ZKRoot> implements
 				constructor = cls.getConstructor(Context.class);
  				view = constructor.newInstance(context);
  				
+ 				//loop through all attributes to add them
  				for(Map.Entry<String, String> entry: component.getOptions().entrySet()) {
  					
+ 					final String key = entry.getKey();
+ 					final String uppercase = key.substring(0, 1).toUpperCase() + key.substring(1);
+ 					
+ 					StringBuilder getBean = new StringBuilder("get");
+ 					getBean.append(uppercase);
+ 					
+ 					StringBuilder setBean = new StringBuilder("set");
+ 					setBean.append(uppercase);
+ 					
+ 					Method methods[] = cls.getMethods();
+ 					
+ 					final Method getMethod = cls.getMethod(getBean.toString(), null);	
+ 					final Class<?> retType = getMethod.getReturnType();
+ 					
+ 					ReachCoercible<?> coercible = CoerceType.getType(retType);
+ 					
+ 					if (coercible == null) {
+ 						//TODO throw a Reach exception here
+ 					}
+ 					
+ 					final Method setMethod = cls.getMethod(setBean.toString(), retType);
+ 					
+ 					// TODO handle the exception or null
+ 					setMethod.invoke(view, coercible.coerce(entry.getValue()));
  				}
-
- 				
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -71,10 +98,10 @@ public class PageCommandHandler extends CommandHandler<ZKRoot> implements
 			}
 
 			// TODO check for null
-			root.addView(view);
+			parent.addView(view);
 
 			for (ZKComponent zkc : component.getComponents()) {
-				invokeClass(zkc, root, context);
+				invokeClass(zkc, parent, context);
 			}
 		}
 	}

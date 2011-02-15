@@ -33,8 +33,8 @@ Copyright (C) 2007 Potix Corporation. All Rights Reserved.
 	a label when a plain text is found in ZUL XML.
 	-->
 	<label-template>
-		<component-name>label</component-name>
-		<component-attribute>prologContent</component-attribute>
+		<component-name>textview</component-name>
+		<component-attribute>text</component-attribute>
 		<raw/><!-- 1) don't trim, 2) generated directly -->
 	</label-template>
 
@@ -86,7 +86,7 @@ Copyright (C) 2007 Potix Corporation. All Rights Reserved.
 		<widget-class>android.widget.Button</widget-class> 
 	</component>
 	<component>
-		<component-name>label</component-name>
+		<component-name>textview</component-name>
 		<component-class>org.zkoss.reach.android.server.components.TextView</component-class>
 		<widget-class>android.widget.TextView</widget-class>
 	</component>
