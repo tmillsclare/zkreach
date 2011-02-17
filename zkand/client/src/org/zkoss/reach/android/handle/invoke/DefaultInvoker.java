@@ -67,7 +67,7 @@ public class DefaultInvoker implements Invoker<Widget> {
  					final Method setMethod = cls.getMethod(setBean.toString(), retType);
  					
  					// TODO handle the exception or null
- 					setMethod.invoke(view, coercible.coerce(entry.getValue()));
+ 					setMethod.invoke(view, coercible.coerce(component.getClsName(), entry.getValue()));
  				}
 			} catch (IllegalArgumentException e) {
 				throw new InvokeException("There is an illegal argument", e);

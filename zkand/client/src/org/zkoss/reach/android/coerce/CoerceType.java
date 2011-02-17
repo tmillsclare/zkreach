@@ -3,6 +3,8 @@ package org.zkoss.reach.android.coerce;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.zkoss.reach.android.coerce.types.CharSequenceCoercer;
+
 
 public class CoerceType {
 	

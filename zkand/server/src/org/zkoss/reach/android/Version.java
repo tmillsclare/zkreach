@@ -12,7 +12,7 @@ Copyright (C) 2010 Potix Corporation. All Rights Reserved.
 {{IS_RIGHT
 }}IS_RIGHT
 */
-package org.zkoss.reach.android.server;
+package org.zkoss.reach.android;
 
 /**
  * The version of the ZK XML component set.

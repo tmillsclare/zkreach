@@ -90,4 +90,9 @@ Copyright (C) 2007 Potix Corporation. All Rights Reserved.
 		<component-class>org.zkoss.reach.android.server.components.TextView</component-class>
 		<widget-class>android.widget.TextView</widget-class>
 	</component>
+	<component>
+		<component-name>linearlayout</component-name>
+		<component-class>org.zkoss.reach.android.server.components.LinearLayout</component-class>
+		<widget-class>android.widget.LinearLayout</widget-class>
+	</component>
 </language>

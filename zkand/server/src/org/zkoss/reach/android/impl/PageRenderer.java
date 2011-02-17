@@ -12,7 +12,7 @@ Copyright (C) 2010 Potix Corporation. All Rights Reserved.
 {{IS_RIGHT
 }}IS_RIGHT
  */
-package org.zkoss.reach.android.server.impl;
+package org.zkoss.reach.android.impl;
 
 import java.io.IOException;
 import java.io.Writer;

@@ -12,7 +12,7 @@ Copyright (C) 2010 Potix Corporation. All Rights Reserved.
 {{IS_RIGHT
 }}IS_RIGHT
 */
-package org.zkoss.reach.android.server.device;
+package org.zkoss.reach.android.device;
 
 import org.zkoss.zk.device.GenericDevice;
 
