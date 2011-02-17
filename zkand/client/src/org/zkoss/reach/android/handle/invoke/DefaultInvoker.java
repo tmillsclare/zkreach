@@ -1,33 +1,31 @@
-package org.zkoss.reach.android.parse;
+package org.zkoss.reach.android.handle.invoke;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.zkoss.reach.android.coerce.CoerceType;
 import org.zkoss.reach.android.coerce.ReachCoercible;
+import org.zkoss.reach.android.exceptions.handle.invoke.InvokeException;
+import org.zkoss.reach.android.handle.Widget;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class PageCommandHandler extends CommandHandler<ZKRoot> implements
-		Invoker<ZKRoot>, Parser<ZKRoot> {
+public class DefaultInvoker implements Invoker<Widget> {
 
 	@Override
-	public void invoke(ZKRoot object, ViewGroup root, Context context) {
-		for (ZKComponent zkc : object.getComponents()) {
-			invokeClass(zkc, root, context);
+	public void invoke(Widget object, ViewGroup parent, Context context)
+			throws InvokeException {
+		for (Widget zkc : object.getChildren()) {
+			invokeClass(zkc, parent, context);
 		}
 	}
-
-	private void invokeClass(ZKComponent component, ViewGroup parent,
-			Context context) {
+	
+	private void invokeClass(Widget component, ViewGroup parent,
+			Context context) throws InvokeException {
 
 		// TODO: Make a decision as to what happens at this point of the
 		// code
@@ -46,7 +44,7 @@ public class PageCommandHandler extends CommandHandler<ZKRoot> implements
  				view = constructor.newInstance(context);
  				
  				//loop through all attributes to add them
- 				for(Map.Entry<String, String> entry: component.getOptions().entrySet()) {
+ 				for(Map.Entry<String, String> entry: component.getAttributes().entrySet()) {
  					
  					final String key = entry.getKey();
  					final String uppercase = key.substring(0, 1).toUpperCase() + key.substring(1);
@@ -56,8 +54,6 @@ public class PageCommandHandler extends CommandHandler<ZKRoot> implements
  					
  					StringBuilder setBean = new StringBuilder("set");
  					setBean.append(uppercase);
- 					
- 					Method methods[] = cls.getMethods();
  					
  					final Method getMethod = cls.getMethod(getBean.toString(), null);	
  					final Class<?> retType = getMethod.getReturnType();
@@ -74,8 +70,7 @@ public class PageCommandHandler extends CommandHandler<ZKRoot> implements
  					setMethod.invoke(view, coercible.coerce(entry.getValue()));
  				}
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new InvokeException("There is an illegal argument", e);
 			} catch (InstantiationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -100,33 +95,10 @@ public class PageCommandHandler extends CommandHandler<ZKRoot> implements
 			// TODO check for null
 			parent.addView(view);
 
-			for (ZKComponent zkc : component.getComponents()) {
+			for (Widget zkc : component.getChildren()) {
 				invokeClass(zkc, parent, context);
 			}
 		}
-	}
-
-	@Override
-	public ZKRoot parse(JSONArray array) {
-		ZKRoot root = null;
-
-		try {
-			root = new ZKRoot(array);
-		} catch (JSONException e) {
-			Log.e("zkreach", e.getMessage());
-		}
-
-		return root;
-	}
-
-	@Override
-	protected Invoker<ZKRoot> getInvoker() {
-		return this;
-	}
-
-	@Override
-	protected Parser<ZKRoot> getParser() {
-		return this;
 	}
 
 }

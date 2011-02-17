@@ -7,7 +7,11 @@ public class ReachException extends Exception {
 	 */
 	private static final long serialVersionUID = 9022762583697473892L;
 	
-	public ReachException(String message) {
-		super(message);
+	public ReachException(String string) {
+		super(string);
+	}
+	
+	public ReachException(String string, Exception ex) {
+		super(string, ex);
 	}
 }

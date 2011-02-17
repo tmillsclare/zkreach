@@ -1,4 +1,4 @@
-package org.zkoss.reach.android.parse;
+package org.zkoss.reach.android.handle;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -7,16 +7,17 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.zkoss.reach.android.exceptions.parsing.ParserRegisterationException;
+import org.zkoss.reach.android.exceptions.handle.parse.ParserRegisterationException;
+import org.zkoss.reach.android.handle.parse.ParserCommand;
 
 import android.content.Context;
 import android.view.ViewGroup;
 
-public class ReachParser {
+public class HandlerManager {
 	
-	private static Map<ParserCommand, CommandHandler<?>> _registeredHandler = new HashMap<ParserCommand, CommandHandler<?>>();
+	private static Map<ParserCommand, BaseHandler<?>> _registeredHandler = new HashMap<ParserCommand, BaseHandler<?>>();
 	
-	public static void registerParser(ParserCommand parserCommand, CommandHandler<?> ch) throws ParserRegisterationException {
+	public static void registerParser(ParserCommand parserCommand, BaseHandler<?> ch) throws ParserRegisterationException {
 		if(_registeredHandler.containsKey(parserCommand)) {
 			throw new ParserRegisterationException("Parser for " + parserCommand.toString() + " already exist. If you would like to override it please use the overrideParser method");
 		}
@@ -24,12 +25,12 @@ public class ReachParser {
 		_registeredHandler.put(parserCommand, ch);
 	}
 	
-	public static CommandHandler<?> registerParserOrOverride(ParserCommand parserCommand, CommandHandler<?> ch) {
+	public static BaseHandler<?> registerParserOrOverride(ParserCommand parserCommand, BaseHandler<?> ch) {
 		return _registeredHandler.put(parserCommand, ch);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void parse(String json, ViewGroup root, Context context) throws JSONException {
+	public static void handle(String json, ViewGroup root, Context context) throws JSONException {
 		JSONObject object = new JSONObject(json);
 		
 		Iterator iterator = object.keys();
@@ -37,7 +38,7 @@ public class ReachParser {
 		while(iterator.hasNext()) {
 			String command = (String)iterator.next();
 			
-			for (Map.Entry<ParserCommand, CommandHandler<?>> entry : _registeredHandler.entrySet()) {
+			for (Map.Entry<ParserCommand, BaseHandler<?>> entry : _registeredHandler.entrySet()) {
 				
 				//let's get the string value of the ParserCommand
 				String parserCommand = entry.getKey().toString();
@@ -45,7 +46,7 @@ public class ReachParser {
 				if(parserCommand.equalsIgnoreCase(command)) {
 					JSONArray contents = object.getJSONArray(command);
 	
-					CommandHandler<?> ch = entry.getValue();
+					BaseHandler<?> ch = entry.getValue();
 					ch.handle(contents, root, context);
 				}
 			}

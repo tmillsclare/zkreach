@@ -1,4 +1,4 @@
-package org.zkoss.reach.android.exceptions.parsing;
+package org.zkoss.reach.android.exceptions.handle.parse;
 
 import org.zkoss.reach.android.exceptions.ReachException;
 
@@ -11,5 +11,9 @@ public class ParserRegisterationException extends ReachException {
 	
 	public ParserRegisterationException(String string) {
 		super(string);
+	}
+	
+	public ParserRegisterationException(String string, Exception ex) {
+		super(string, ex);
 	}
 }
