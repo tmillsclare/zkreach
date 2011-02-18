@@ -50,10 +50,9 @@ public class Page extends ViewGroup {
 		
 		View child = getChildAt(0);
 		
-		//TODO re-implement this
-		/*if (!(child instanceof ViewGroup)) {
+		if (!(child instanceof ViewGroup)) {
 			throw new IllegalStateException("Page child must extend from ViewGroup");
-		}*/
+		}
 		
 		if (child.getVisibility() != GONE) {
 			//Child should always fill the page

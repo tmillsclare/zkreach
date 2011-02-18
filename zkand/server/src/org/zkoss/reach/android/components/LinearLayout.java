@@ -14,7 +14,7 @@ public class LinearLayout extends ReachComponent {
 	
 	private int _width;
 	private int _height;
-	private float _weight;
+	private float _weightSum;
 	
 	
 	
@@ -47,26 +47,25 @@ public class LinearLayout extends ReachComponent {
 
 
 
-	public float getWeight() {
-		return _weight;
+	public float getWeightSum() {
+		return _weightSum;
 	}
 
 
 
-	public void setWeight(float weight) {
+	public void setWeightSum(float weightSum) {
 		
-		if(weight != _weight) {
-			this._weight = weight;
-			smartUpdate("LayoutParams", renderLayoutParams());
+		if(weightSum != _weightSum) {
+			this._weightSum = weightSum;
+			smartUpdate("WeightSum", _weightSum);
 		}
 	}
 	
 	private String renderLayoutParams() {
-		StringBuilder sb = new StringBuilder(_width);
+		StringBuilder sb = new StringBuilder();
+		sb.append(_width);
 		sb.append(',');
 		sb.append(_height);
-		sb.append(',');
-		sb.append(_weight);
 		
 		return sb.toString();
 	}

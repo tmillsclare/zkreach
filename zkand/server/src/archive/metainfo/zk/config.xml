@@ -15,12 +15,12 @@ Copyright (C) 2007 Potix Corporation. All Rights Reserved.
 	<config-name>zkreach</config-name><!-- used to resolve dependency -->
 
 	<version>
-		<version-class>org.zkoss.reach.android.server.Version</version-class>
+		<version-class>org.zkoss.reach.android.Version</version-class>
 		<version-uid>1.0.0</version-uid>
 	</version>
 
 	<device-config>
 		<device-type>json</device-type>
-		<device-class>org.zkoss.reach.android.server.device.ReachDevice</device-class>
+		<device-class>org.zkoss.reach.android.device.ReachDevice</device-class>
 	</device-config>
 </config>

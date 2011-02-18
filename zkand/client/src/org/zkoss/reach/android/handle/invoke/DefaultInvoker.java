@@ -47,13 +47,12 @@ public class DefaultInvoker implements Invoker<Widget> {
  				for(Map.Entry<String, String> entry: component.getAttributes().entrySet()) {
  					
  					final String key = entry.getKey();
- 					final String uppercase = key.substring(0, 1).toUpperCase() + key.substring(1);
  					
  					StringBuilder getBean = new StringBuilder("get");
- 					getBean.append(uppercase);
+ 					getBean.append(key);
  					
  					StringBuilder setBean = new StringBuilder("set");
- 					setBean.append(uppercase);
+ 					setBean.append(key);
  					
  					final Method getMethod = cls.getMethod(getBean.toString(), null);	
  					final Class<?> retType = getMethod.getReturnType();
@@ -65,9 +64,12 @@ public class DefaultInvoker implements Invoker<Widget> {
  					}
  					
  					final Method setMethod = cls.getMethod(setBean.toString(), retType);
+ 									
+ 					// TODO handle the exception or null
+ 					Object coerce = coercible.coerce(entry.getValue());
  					
  					// TODO handle the exception or null
- 					setMethod.invoke(view, coercible.coerce(component.getClsName(), entry.getValue()));
+ 					setMethod.invoke(view, coerce);
  				}
 			} catch (IllegalArgumentException e) {
 				throw new InvokeException("There is an illegal argument", e);
@@ -94,9 +96,13 @@ public class DefaultInvoker implements Invoker<Widget> {
 
 			// TODO check for null
 			parent.addView(view);
-
-			for (Widget zkc : component.getChildren()) {
-				invokeClass(zkc, parent, context);
+			
+			//if view is not a ViewGroup descendant then it
+			//cannot have children
+			if(view instanceof ViewGroup) {
+				for (Widget zkc : component.getChildren()) {
+					invokeClass(zkc, (ViewGroup)view, context);
+				}
 			}
 		}
 	}

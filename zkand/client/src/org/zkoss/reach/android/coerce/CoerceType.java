@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.zkoss.reach.android.coerce.types.CharSequenceCoercer;
+import org.zkoss.reach.android.coerce.types.LayoutParamsCoercer;
+
+import android.view.ViewGroup;
 
 
 public class CoerceType {
@@ -13,6 +16,7 @@ public class CoerceType {
 	static {
 		//default types
 		coercionMap.put(CharSequence.class, new CharSequenceCoercer());
+		coercionMap.put(ViewGroup.LayoutParams.class, new LayoutParamsCoercer());
 	}
 	
 	public static void registerCoercion(Class<?> type, ReachCoercible<?> coercible) {
