@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 
 public class HandlerManager {
 	
-	private static Map<ParserCommand, BaseHandler<?>> _registeredHandler = new HashMap<ParserCommand, BaseHandler<?>>();
+	private static Map<ParserCommand, Handler<?>> _registeredHandler = new HashMap<ParserCommand, Handler<?>>();
 	
-	public static void registerParser(ParserCommand parserCommand, BaseHandler<?> ch) throws ParserRegisterationException {
+	public static void registerParser(ParserCommand parserCommand, Handler<?> ch) throws ParserRegisterationException {
 		if(_registeredHandler.containsKey(parserCommand)) {
 			throw new ParserRegisterationException("Parser for " + parserCommand.toString() + " already exist. If you would like to override it please use the overrideParser method");
 		}
@@ -25,7 +25,7 @@ public class HandlerManager {
 		_registeredHandler.put(parserCommand, ch);
 	}
 	
-	public static BaseHandler<?> registerParserOrOverride(ParserCommand parserCommand, BaseHandler<?> ch) {
+	public static Handler<?> registerParserOrOverride(ParserCommand parserCommand, Handler<?> ch) {
 		return _registeredHandler.put(parserCommand, ch);
 	}
 	
@@ -38,7 +38,7 @@ public class HandlerManager {
 		while(iterator.hasNext()) {
 			String command = (String)iterator.next();
 			
-			for (Map.Entry<ParserCommand, BaseHandler<?>> entry : _registeredHandler.entrySet()) {
+			for (Map.Entry<ParserCommand, Handler<?>> entry : _registeredHandler.entrySet()) {
 				
 				//let's get the string value of the ParserCommand
 				String parserCommand = entry.getKey().toString();
@@ -46,7 +46,7 @@ public class HandlerManager {
 				if(parserCommand.equalsIgnoreCase(command)) {
 					JSONArray contents = object.getJSONArray(command);
 	
-					BaseHandler<?> ch = entry.getValue();
+					Handler<?> ch = entry.getValue();
 					ch.handle(contents, root, context);
 				}
 			}

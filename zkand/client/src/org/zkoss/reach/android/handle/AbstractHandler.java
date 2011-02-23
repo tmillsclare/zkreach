@@ -10,10 +10,10 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 
-public abstract class BaseHandler<E> {
+public abstract class AbstractHandler<E> implements Handler<E> {
 	
-	protected abstract Parser<E> getParser();
-	protected abstract Invoker<E> getInvoker();
+	public abstract Parser<E> getParser();
+	public abstract Invoker<E> getInvoker();
 	
 	public void handle(JSONArray json, ViewGroup parent, Context context) {
 		

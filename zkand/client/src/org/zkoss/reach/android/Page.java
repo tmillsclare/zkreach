@@ -9,8 +9,9 @@ import org.zkoss.reach.android.http.HttpDownload;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-public class Page extends ViewGroup {
+public class Page extends LinearLayout {
 	
 	private URI _location;
 	
@@ -54,9 +55,6 @@ public class Page extends ViewGroup {
 			throw new IllegalStateException("Page child must extend from ViewGroup");
 		}
 		
-		if (child.getVisibility() != GONE) {
-			//Child should always fill the page
-            child.layout(l, t, r, b);
-        }
+		super.onLayout(changed, l, count, r, b);
 	}
 }

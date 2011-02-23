@@ -5,17 +5,17 @@ import org.zkoss.reach.android.handle.invoke.Invoker;
 import org.zkoss.reach.android.handle.parse.DefaultParser;
 import org.zkoss.reach.android.handle.parse.Parser;
 
-public class PageHandler extends BaseHandler<Widget> {
+public class PageHandler extends AbstractHandler<Widget> {
 	
 	private final Invoker<Widget> defaultInvoker = new DefaultInvoker();
 	private final Parser<Widget> defaultParser = new DefaultParser();
 	
 	
-	protected Invoker<Widget> getInvoker() {
+	public Invoker<Widget> getInvoker() {
 		return defaultInvoker;
 	}
 
-	protected Parser<Widget> getParser() {
+	public Parser<Widget> getParser() {
 		return defaultParser;
 	}
 
