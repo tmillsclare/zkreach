@@ -7,6 +7,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.zkoss.reach.android.exceptions.handle.HandleException;
 import org.zkoss.reach.android.exceptions.handle.parse.ParserRegisterationException;
 import org.zkoss.reach.android.handle.parse.ParserCommand;
 
@@ -30,8 +31,13 @@ public class HandlerManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void handle(String json, ViewGroup root, Context context) throws JSONException {
-		JSONObject object = new JSONObject(json);
+	public static void handle(String json, ViewGroup root, Context context) throws HandleException {
+		JSONObject object;
+		try {
+			object = new JSONObject(json);
+		} catch (JSONException e) {
+			throw new HandleException("Error when parsing the JSON: " + json, e);
+		}
 		
 		Iterator iterator = object.keys();
 		
@@ -44,7 +50,13 @@ public class HandlerManager {
 				String parserCommand = entry.getKey().toString();
 				
 				if(parserCommand.equalsIgnoreCase(command)) {
-					JSONArray contents = object.getJSONArray(command);
+					JSONArray contents;
+					try {
+						contents = object.getJSONArray(command);
+					} catch (JSONException e) {
+						throw new HandleException("Error when retrieving the command (" + command + ") from the json: " 
+												  + json, e);		
+					}
 	
 					Handler<?> ch = entry.getValue();
 					ch.handle(contents, root, context);
