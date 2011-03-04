@@ -17,14 +17,14 @@ import android.view.ViewGroup;
 public class DefaultInvoker implements Invoker<Widget> {
 
 	@Override
-	public void invoke(Widget object, ViewGroup parent, Context context)
+	public View invoke(Context context, Widget object)
 			throws InvokeException {
 		for (Widget zkc : object.getChildren()) {
-			invokeClass(zkc, parent, context);
+			invokeClass(zkc, null, context);
 		}
 	}
 	
-	private void invokeClass(Widget component, ViewGroup parent,
+	private View invokeClass(Widget component, ViewGroup parent,
 			Context context) throws InvokeException {
 
 		// TODO: Make a decision as to what happens at this point of the
